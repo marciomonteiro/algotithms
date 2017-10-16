@@ -89,6 +89,6 @@ q1, l1 = median_NlogN(l, p, r)
 print(p, q1, r)
 print( check_median(l1, p, q1, r) )
 
-q2, l2 = find_nth_element(l, p, r, p + (r-p)//2)
+q2, l2 = median_N(l, p, r)
 print(p, q2, r)
 print( check_median(l2, p, q2, r) )

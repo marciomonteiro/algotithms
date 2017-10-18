@@ -9,13 +9,7 @@ def check_result(container, container_size):
   occupied_space = sum(container)
   print("total - occupied/free (usage%): ", total_space," - ", occupied_space, "/",  total_space - occupied_space, " (", "%.2f" % (100*occupied_space/total_space) ,")" )
   print("=====================\n")
-def first_fit_ordered(obects, container, container_size):
-  container.insert(len(container), 0)
-  for obj in objects[:]:
-    if container[len(container)-1] + obj > container_size:
-      container.insert(len(container), 0)
-    
-    container[len(container)-1] += obj
+
 
 def first_fit_unordered(obects, container, container_size):
   container.insert(len(container), 0)
@@ -39,6 +33,14 @@ def first_fit_unordered(obects, container, container_size):
       container[bottom], container[fit_container] = container[fit_container], container[bottom]
       bottom+=1
 
+def first_fit_ordered(obects, container, container_size):
+  container.insert(len(container), 0)
+  for obj in objects[:]:
+    if container[len(container)-1] + obj > container_size:
+      container.insert(len(container), 0)
+    
+    container[len(container)-1] += obj
+    
 def biggest_n_smallest(obects, container, container_size):
   smallest = 0
   biggest = len(objects)-1

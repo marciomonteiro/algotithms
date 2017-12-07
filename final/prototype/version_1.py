@@ -1,11 +1,11 @@
-from numpy.random import uniform, normal, triangular
+import numpy as np
 import random
 
 import matplotlib.pyplot as plt
 
 def sanity_check(containers, max_size):
     if len([ x for x in containers if x > max_size]):
-        print("Deu ruim / give bad")
+        print("Problema, existem contêineres com capacidade violada.")
 
 def rand(dist, max_size):
     if(dist == "uniform"):
@@ -83,63 +83,118 @@ def biggest_n_smallest(objects, max_size):
     return containers
 
 def experiment(objects, max_size):
-    print("first_fit:")
+#     print("first_fit:")
     ff_containers = first_fit(objects[:], max_size)
     sanity_check(ff_containers, max_size)
-    check_result(ff_containers, max_size)
+#     check_result(ff_containers, max_size)
 
-    print("first_fit_ascending_sort:")
+#     print("first_fit_ascending_sort:")
     ff_as_ord_containers = first_fit_ascending_sort(objects[:], max_size)
     sanity_check(ff_as_ord_containers, max_size)
-    check_result(ff_as_ord_containers, max_size)
+#     check_result(ff_as_ord_containers, max_size)
 
-    print("first_fit_descending_sort:")
+#     print("first_fit_descending_sort:")
     ff_des_ord_containers = first_fit_descending_sort(objects[:], max_size)
     sanity_check(ff_des_ord_containers, max_size)
-    check_result(ff_des_ord_containers, max_size)
+#     check_result(ff_des_ord_containers, max_size)
 
-    print("biggest_n_smallest:")
+#     print("biggest_n_smallest:")
     bs_containers = biggest_n_smallest(objects[:], max_size)
     sanity_check(bs_containers, max_size)
-    check_result(bs_containers, max_size)
+#     check_result(bs_containers, max_size)
+    return [len(ff_containers), len(ff_as_ord_containers), len(ff_des_ord_containers), len(bs_containers)]
 
-n_objects = 1000
 max_size = 1000
-n_containers = 500
+n_containers = 1000
 
 print("uniform ==============================")
 # objects = [ int(uniform(1, max_size)) for i in range(n_objects) ]
-objects = generate_solution(n_containers, max_size, "uniform")
-random.shuffle(objects)
-# print(objects)
 # plt.hist(objects, bins = 150, normed=True)
 # plt.show()
-experiment(objects, max_size)
+ff = []
+ff_as = []
+ff_des = []
+bs = []
+for i in range(1, 11):
+    objects = generate_solution(n_containers, max_size, "uniform")
+    random.shuffle(objects)
+    result = experiment(objects, max_size)
+    result = [x-n_containers for x in result]
+    ff.append(result[0])
+    ff_as.append(result[1])
+    ff_des.append(result[2])
+    bs.append(result[3])
+
+print("FF", np.average(ff), np.std(ff))
+print("FF AS", np.average(ff_as), np.std(ff_as))
+print("FF DS", np.average(ff_des), np.std(ff_des))
+print("BS", np.average(bs), np.std(bs))
+
+
 
 print("normal ==============================")
 # objects = [ abs(int(normal(max_size/2, max_size/5))) % 1000 for i in range(n_objects) ]
-objects = generate_solution(n_containers, max_size, "normal")
-random.shuffle(objects)
-# print(objects)
-# plt.hist(objects, bins = 150, normed=True)
-# plt.show()
-experiment(objects, max_size)
+# # plt.hist(objects, bins = 150, normed=True)
+# # plt.show()
+ff = []
+ff_as = []
+ff_des = []
+for i in range(1, 11):
+    objects = generate_solution(n_containers, max_size, "normal")
+    random.shuffle(objects)
+    result = experiment(objects, max_size)
+    result = [x-n_containers for x in result]
+    ff.append(result[0])
+    ff_as.append(result[1])
+    ff_des.append(result[2])
+    bs.append(result[3])
+
+print("FF", np.average(ff), np.std(ff))
+print("FF AS", np.average(ff_as), np.std(ff_as))
+print("FF DS", np.average(ff_des), np.std(ff_des))
+print("BS", np.average(bs), np.std(bs))
 
 print("linear_dec ==============================")
 # objects = [ int(triangular(1, 1, max_size)) for i in range(n_objects) ]
-objects = generate_solution(n_containers, max_size, "linear_dec")
-random.shuffle(objects)
-# print(objects)
-# plt.hist(objects, bins = 150, normed=True)
-# plt.show()
-experiment(objects, max_size)
+# # plt.hist(objects, bins = 150, normed=True)
+# # plt.show()
+ff = []
+ff_as = []
+ff_des = []
+for i in range(1, 11):
+    objects = generate_solution(n_containers, max_size, "linear_dec")
+    random.shuffle(objects)
+    result = experiment(objects, max_size)
+    result = [x-n_containers for x in result]
+    ff.append(result[0])
+    ff_as.append(result[1])
+    ff_des.append(result[2])
+    bs.append(result[3])
+
+print("FF", np.average(ff), np.std(ff))
+print("FF AS", np.average(ff_as), np.std(ff_as))
+print("FF DS", np.average(ff_des), np.std(ff_des))
+print("BS", np.average(bs), np.std(bs))
 
 
 print("linear_inc ==============================")
-# objects = [ int(triangular(1, max_size, max_size)) for i in range(n_objects) ]
-objects = generate_solution(n_containers, max_size, "linear_inc")
-random.shuffle(objects)
-# print(objects)
-# plt.hist(objects, bins = 150, normed=True)
-# plt.show()
-experiment(objects, max_size)
+# # objects = [ int(triangular(1, max_size, max_size)) for i in range(n_objects) ]
+# # plt.hist(objects, bins = 150, normed=True)
+# # plt.show()
+ff = []
+ff_as = []
+ff_des = []
+for i in range(1, 11):
+    objects = generate_solution(n_containers, max_size, "linear_inc")
+    random.shuffle(objects)
+    result = experiment(objects, max_size)
+    result = [x-n_containers for x in result]
+    ff.append(result[0])
+    ff_as.append(result[1])
+    ff_des.append(result[2])
+    bs.append(result[3])
+
+print("FF", np.average(ff), np.std(ff))
+print("FF AS", np.average(ff_as), np.std(ff_as))
+print("FF DS", np.average(ff_des), np.std(ff_des))
+print("BS", np.average(bs), np.std(bs))
